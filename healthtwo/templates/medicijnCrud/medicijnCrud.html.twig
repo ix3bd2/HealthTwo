@@ -1,0 +1,45 @@
+{% extends 'default.html.twig' %}
+
+{% block list %}
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+<div class="container">
+    <table class="table" style="margin-top:10px ;color: white">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">naam</th>
+            <th scope="col">werking</th>
+            <th scope="col">bijwerking</th>
+            <th scope="col">prijs</th>
+            <th scope="col">verzekerd</th>
+            <th scope="col">edit</th>
+            <th scope="col">Delete</th>
+        </tr>
+        </thead>
+            {% for medicijn in Medicijn %}
+                <tbody>
+                <tr>
+            <td>{{ medicijn.naam }}</td>
+            <td>{{ medicijn.werking }}</td>
+            <td>{{ medicijn.bijwerking }}</td>
+            <td>€{{ medicijn.prijs }}</td>
+            <td>{% if medicijn.verzekerd==true %}
+                    verzekerd
+                {% else  %}
+                    niet verzekerd
+                {% endif %}</td>
+            <td><a class="fas fa-edit" href="{{ path('edit',{'id':medicijn.id}) }}" style="color:black;"></a></td>
+            <td><a class="fas fa-trash-alt" href="{{ path('delete', {'id':medicijn.id}) }}" style="color: red" ></a>
+            </td>
+
+                </tr>
+
+        </tbody>
+            {% endfor %}
+    </table>
+    <a href="{{ path('add') }}" class="fas fa-plus-square" style="margin: 10px;color: dodgerblue;" role="button"  ></a>
+</div>
+
+
+
+
+{% endblock %}

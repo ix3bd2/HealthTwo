@@ -1,0 +1,10 @@
+{% extends 'default.html.twig' %}
+{% block Form %}
+    <div class="container" style="color: white">
+    <h1> Medicijn Toevoegen</h1>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button type="submit" class="btn btn-dark">Toevoegen</button>
+    {{ form_end(form) }}
+    </div>
+{% endblock %}
