@@ -1,0 +1,49 @@
+{% extends 'default.html.twig' %}
+
+{% block list %}
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <div class="container">
+        <table class="table" style="margin-top:10px ;color: white">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">naam</th>
+                <th scope="col">datum</th>
+                <th scope="col">periode</th>
+                <th scope="col">prijs</th>
+                <th scope="col">verzekerd</th>
+                <th scope="col">edit</th>
+                <th scope="col">Delete</th>
+            </tr>
+            </thead>
+            {% for recept in recepten %}
+
+            <tbody>
+                <tr>
+                    <td>{{ recept.Medicijn.naam }}</td>
+                    <td>{{ recept.datum|date('d/m/y') }}</td>
+                    <td>{{ recept.periode }}</td>
+                    <td>{{ recept.Medicijn.prijs }}</td>
+                    <td>{% if recept.Medicijn.verzekerd == true %}
+                            verzekerd
+                        {% else  %}
+                            niet verzekerd
+                        {% endif %}</td>
+                    <td><a class="fas fa-edit" href="{{ path('editRecept',{'id':recept.id}) }}" style="color:black;"></a></td>
+                    <td><a class="fas fa-trash-alt" href="{{ path('deleteRecept', {'id':recept.id}) }}" style="color: red" ></a>
+                    </td>
+
+                </tr>
+
+                </tbody>
+            {% endfor %}
+        </table>
+       {% if recepten is empty %}
+            <p style="color: white">Geen medicijnen</p>
+        {% endif %}
+        <a href="{{ path('addRecept') }}" class="fas fa-plus-square" style="margin: 10px;color: dodgerblue;" role="button"  ></a>
+    </div>
+
+
+
+
+{% endblock %}

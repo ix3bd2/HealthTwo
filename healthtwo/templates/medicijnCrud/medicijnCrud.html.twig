@@ -27,15 +27,22 @@
                 {% else  %}
                     niet verzekerd
                 {% endif %}</td>
+
             <td><a class="fas fa-edit" href="{{ path('edit',{'id':medicijn.id}) }}" style="color:black;"></a></td>
             <td><a class="fas fa-trash-alt" href="{{ path('delete', {'id':medicijn.id}) }}" style="color: red" ></a>
             </td>
+
+
 
                 </tr>
 
         </tbody>
             {% endfor %}
+
     </table>
+    {% if Medicijn is empty %}
+        <p style="color: white">Geen medicijnen</p>
+    {% endif %}
     <a href="{{ path('add') }}" class="fas fa-plus-square" style="margin: 10px;color: dodgerblue;" role="button"  ></a>
 </div>
 

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MedicijnenRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,10 +23,7 @@ class Medicijnen
      * @ORM\Column(type="string", length=255 )
      */
     private $naam;
-    /**
-     * @ORM\Column(type="string", length=100, unique=true)
-     */
-    private $url;
+
     /**
      * @ORM\Column(type="text")
      */
@@ -46,6 +45,19 @@ class Medicijnen
      */
     private $verzekerd;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Recept::class, mappedBy="medicijn", orphanRemoval=true)
+     */
+    private $recept;
+
+    public function __construct()
+    {
+        $this->recept = new ArrayCollection();
+    }
+
+
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -62,17 +74,7 @@ class Medicijnen
 
         return $this;
     }
-    public function getUrl(): ?string
-    {
-        return $this->url;
-    }
 
-    public function setUrl(string $url): self
-    {
-        $this->url = $url;
-
-        return $this;
-    }
     public function getWerking(): ?string
     {
         return $this->werking;
@@ -120,4 +122,35 @@ class Medicijnen
 
         return $this;
     }
+
+    /**
+     * @return Collection|Recept[]
+     */
+    public function getRecept(): Collection
+    {
+        return $this->recept;
+    }
+
+    public function addRecept(Recept $recept): self
+    {
+        if (!$this->recept->contains($recept)) {
+            $this->recept[] = $recept;
+            $recept->setMedicijn($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecept(Recept $recept): self
+    {
+        if ($this->recept->removeElement($recept)) {
+            // set the owning side to null (unless already changed)
+            if ($recept->getMedicijn() === $this) {
+                $recept->setMedicijn(null);
+            }
+        }
+
+        return $this;
+    }
+
 }
